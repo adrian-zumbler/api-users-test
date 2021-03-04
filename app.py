@@ -28,14 +28,15 @@ def create_user():
 @app.route('/users/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
     user = select_user(user_id)
-    return 'Hello, World!'
-
+    user.update(request.json)
+    return json.dumps(test_data)
 
 # Delete User by Id
 @app.route('/users/<int:user_id>', methods=['DELETE'])
-def delete_user():
-    return 'Hello, World!'
+def delete_user(user_id):
+    user = select_user(user_id)
+    test_data.remove(user)
+    return json.dumps(test_data)
 
-
-def select_user(self,user_id):
-    return user for user in test_data if user['id'] == user_id
+def select_user(user_id):
+    return next(user for user in test_data if user['id'] == user_id)
